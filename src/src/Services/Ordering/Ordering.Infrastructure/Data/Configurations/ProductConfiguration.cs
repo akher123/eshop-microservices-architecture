@@ -1,0 +1,14 @@
+﻿
+namespace Ordering.Infrastructure.Data.Configurations;
+
+internal class ProductConfiguration : IEntityTypeConfiguration<Product>
+{
+    public void Configure(EntityTypeBuilder<Product> builder)
+    {
+        builder.HasKey(p => p.Id);
+        builder.Property(p => p.Id).HasConversion(
+            ProductId => ProductId.Value,
+            dbId => ProductId.Of(dbId));
+        builder.Property(p=>p.Name).HasMaxLength(100).IsRequired();
+    }
+}
